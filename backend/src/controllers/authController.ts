@@ -15,7 +15,8 @@ export const signup: express.RequestHandler =async (req:Request, res:Response): 
             }
         })
         if(existingUser){
-            return res.status(400).json({error: 'User already exists'})
+            res.status(400).json({error: 'User already exists'})
+            return
         }
         const user = await prisma.user.create({
             data:{
@@ -25,7 +26,7 @@ export const signup: express.RequestHandler =async (req:Request, res:Response): 
                 password: hashedPassword
             }
         })
-        res.json(user)
+        res.status(200).json(user)
     } catch (error) {
         res.status(400).json({error: 'An error occurred'})
     }
@@ -40,11 +41,13 @@ export const login: express.RequestHandler =async (req:Request, res:Response): P
             }
         })
         if(!user){
-            return res.status(400).json({error: 'Invalid credentials'})
+            res.status(400).json({error: 'Invalid credentials'})
+            return
         }
         const passwordMatch = await bcrypt.compare(password, user.password)
         if(!passwordMatch){
-            return res.status(400).json({error: 'Invalid credentials'})
+            res.status(400).json({error: 'Invalid credentials'})
+            return
         }
         const token = jwt.sign({userId: user.id}, process.env.JWT_SECRET as string)
         res.json({token})
