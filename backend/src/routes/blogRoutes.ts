@@ -10,7 +10,7 @@ router.post('/', authMiddleware as any, zodPostMiddleware(blogPostSchema), creat
 router.get('/getUserBlogs', authMiddleware as any, getPaginatedBlogsByUser as express.RequestHandler);
 router.get('/', authMiddleware as any, getPaginatedBlogs as express.RequestHandler);
 router.get('/creator/:username', getFirst10BlogsByCreator as express.RequestHandler);
-router.get('/:id',authMiddleware as any, getBlogById as express.RequestHandler);
+router.get('/:id', getBlogById as express.RequestHandler);
 router.post('/:id/comment', authMiddleware as any, addCommentToBlog as express.RequestHandler);
 router.post('/category', authMiddleware as any, createCategory as express.RequestHandler);
 router.delete('/:id', authMiddleware as any, deleteBlogById as express.RequestHandler);

@@ -7,6 +7,7 @@ import { BlogResponse } from "../types/types";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { HashLoader } from "react-spinners";
+
 const Blog = () => {
     const navigate= useNavigate();
     const [blog, setBlog] = useState<BlogResponse | null>(null);
@@ -24,6 +25,7 @@ const Blog = () => {
             setBlog(response);
             setIsLoading(false);
         } catch (error) {
+            setIsLoading(false);
             console.error("Error fetching blog:", error);
         }
     };
@@ -36,7 +38,7 @@ const Blog = () => {
         return formattedDate;
     };
     const backClickHandler = () => {
-        navigate('/home');
+        navigate(-1);
     };
     const addComment = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -54,6 +56,7 @@ const Blog = () => {
     };
     useEffect(() => {
         fetchBlog();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     return (
         <div className="bg-amber-50">
