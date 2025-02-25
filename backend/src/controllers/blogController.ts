@@ -19,6 +19,7 @@ export const createBlog:express.RequestHandler = async (req: Request, res: Respo
         });
         res.json(blog);
     } catch (error) {
+        console.log(error);
         res.status(400).json({ error: "An error occurred" });
     }
 };
@@ -32,6 +33,7 @@ export const getPaginatedBlogs:express.RequestHandler = async (req: Request, res
         : null;
     const adminUsername=(req.query.adminUsername as string) || "";
 
+    console.log(page, pageSize, searchTerm, categoryId, adminUsername);
     const skip = (page - 1) * pageSize;
     const take = pageSize;
     try {
@@ -43,6 +45,25 @@ export const getPaginatedBlogs:express.RequestHandler = async (req: Request, res
                 }
             })
         }
+        const blogsCount = await prisma.blog.count({
+            where: {
+                OR: [
+                    {
+                        title: {
+                            contains: searchTerm,
+                            mode: "insensitive",
+                        },
+                    },
+                    {
+                        content: {
+                            contains: searchTerm,
+                            mode: "insensitive",
+                        },
+                    },
+                ],
+                categoryId: categoryId ? categoryId : undefined
+            },
+        });
         const blogs = await prisma.blog.findMany({
             skip,
             take,
@@ -69,7 +90,11 @@ export const getPaginatedBlogs:express.RequestHandler = async (req: Request, res
             },
             include: {
                 user: true,
-                comments: true,
+                comments: {
+                    include: {
+                        user: true,
+                    },
+                },
                 upvotes: true,
                 category: true,
             },
@@ -78,16 +103,95 @@ export const getPaginatedBlogs:express.RequestHandler = async (req: Request, res
         res.json({
             data: blogs,
             pagination: {
-                total: blogs.length,
+                total: blogsCount,
                 page,
                 pageSize,
-                totalPages: Math.ceil(blogs.length / pageSize),
+                totalPages: Math.ceil(blogsCount / pageSize),
             },
         });
     } catch (error: any) {
         res.status(500).json({
             error: "An error occurred while fetching blogs.",
         });
+    }
+}
+export const getPaginatedBlogsByUser:express.RequestHandler = async (req: Request, res: Response):Promise<any> => {
+    const authReq = req as AuthRequest;
+    const user=authReq.user;
+    const page = parseInt(req.query.page as string) || 1;
+    const pageSize = parseInt(req.query.pageSize as string) || 10;
+    const searchTerm = (req.query.searchTerm as string) || "";
+    const categoryId = req.query.categoryId
+        ? parseInt(req.query.categoryId as string) : null;
+    const skip = (page - 1) * pageSize;
+    const take = pageSize;
+    try {
+        const blogsCount = await prisma.blog.count({
+            where: {
+                userId: user.userId,
+                OR: [
+                    {
+                        title: {
+                            contains: searchTerm,
+                            mode: "insensitive",
+                        },
+                    },
+                    {
+                        content: {
+                            contains: searchTerm,
+                            mode: "insensitive",
+                        },
+                    },
+                ],
+                categoryId: categoryId ? categoryId : undefined
+            },
+        });
+        const blogs = await prisma.blog.findMany({
+            skip,
+            take,
+            where: {
+                userId: user.userId,
+                OR: [
+                    {
+                        title: {
+                            contains: searchTerm,
+                            mode: "insensitive",
+                        },
+                    },
+                    {
+                        content: {
+                            contains: searchTerm,
+                            mode: "insensitive",
+                        },
+                    },
+                ],
+                categoryId: categoryId ? categoryId : undefined
+            },
+            orderBy: {
+                publishedDate: "desc",
+            },
+            include:{
+                user:true,
+                comments:{
+                    include:{
+                        user:true
+                    }
+                },
+                upvotes:true,
+                category:true
+            }
+        });
+        res.json({
+            data: blogs,
+            pagination:{
+                total:blogsCount,
+                page,
+                pageSize,
+                totalPages:Math.ceil(blogsCount/pageSize)
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ error: "An error occurred" });
     }
 }
 
@@ -117,11 +221,13 @@ export const getBlogById:express.RequestHandler = async (req: Request, res: Resp
         const upVotesCount=blog.upvotes.length;
         res.json({...blog, upVotesCount});
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: "An error occurred" });
     }
 }
 export const getFirst10BlogsByCreator:express.RequestHandler = async (req: Request, res: Response):Promise<any> => {
     const { username } = req.params;
+    console.log(username);
     try {
         const blogs = await prisma.blog.findMany({
             where: {
@@ -133,6 +239,16 @@ export const getFirst10BlogsByCreator:express.RequestHandler = async (req: Reque
                 publishedDate: "desc",
             },
             take: 10,
+            include:{
+                user: true,
+                comments: {
+                    include: {
+                        user: true,
+                    },
+                },
+                upvotes: true,
+                category: true,
+            }
         });
         res.json(blogs);
     } catch (error) {
@@ -159,6 +275,7 @@ export const deleteBlogById:express.RequestHandler = async (req: Request, res: R
         });
         res.json({ message: "Blog deleted successfully" });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: "An error occurred" });
     }
 }
@@ -186,6 +303,7 @@ export const addCommentToBlog: express.RequestHandler = async (req: Request, res
         });
         res.json(comment);
     } catch (error) {
+    console.log(error);
         res.status(500).json({ error: "An error occurred" });
     }
 }
@@ -201,6 +319,16 @@ export const createCategory: express.RequestHandler = async (req: Request, res: 
         res.json(category);
     } catch (error) {
         res.status(500).json({ error: "An error occurred" });
+    }
+}
+export const getAllCategories1: express.RequestHandler = async (req: Request, res: Response):Promise<any> => {
+
+    try {
+        const categories = await prisma.category.findMany();
+        res.json(categories);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "an error occurred"});
     }
 }
 

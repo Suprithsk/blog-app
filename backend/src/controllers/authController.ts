@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import express from 'express'
 import { UserSignupInput, UserLoginInput } from "../schemas/authSchema";
+import { AuthRequest } from "../types/types";
 
 export const signup: express.RequestHandler =async (req:Request, res:Response): Promise<any>=>{
     const {username, email, password, name} = req.body as UserSignupInput
@@ -11,7 +12,10 @@ export const signup: express.RequestHandler =async (req:Request, res:Response): 
     try {
         const existingUser = await prisma.user.findFirst({
             where:{
-                username
+                OR: [
+                    { username },
+                    { email }
+                ]
             }
         })
         if(existingUser){
@@ -28,6 +32,7 @@ export const signup: express.RequestHandler =async (req:Request, res:Response): 
         })
         res.status(200).json(user)
     } catch (error) {
+        console.error(error)
         res.status(400).json({error: 'An error occurred'})
     }
 }
@@ -51,6 +56,20 @@ export const login: express.RequestHandler =async (req:Request, res:Response): P
         }
         const token = jwt.sign({userId: user.id}, process.env.JWT_SECRET as string)
         res.json({token})
+    } catch (error) {
+        res.status(400).json({error: 'An error occurred'})
+    }
+}
+
+export const getUser: express.RequestHandler =async (req:Request, res:Response): Promise<any>=>{
+    const authReq = req as AuthRequest
+    try {
+        const user = await prisma.user.findFirst({
+            where:{
+                id: authReq.user.userId
+            }
+        })
+        res.json(user)
     } catch (error) {
         res.status(400).json({error: 'An error occurred'})
     }

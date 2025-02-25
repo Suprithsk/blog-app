@@ -5,7 +5,7 @@ import { AuthRequest } from "../types/types"
 import express from 'express'
 
 export const authMiddleware= async (req: AuthRequest, res: Response, next: NextFunction):Promise<any> => {
-    
+    console.log('calkled')
     try {
         let token: string| undefined= req.header('Authorization')
         if(!token){
@@ -21,6 +21,7 @@ export const authMiddleware= async (req: AuthRequest, res: Response, next: NextF
         req.user = user
         next()
     } catch (error) {
+        console.error(error)
         res.status(401).json({error: 'Unauthorized'})
     }
 }
