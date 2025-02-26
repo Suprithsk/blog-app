@@ -259,6 +259,11 @@ export const getFirst10BlogsByCreator:express.RequestHandler = async (req: Reque
 export const deleteBlogById:express.RequestHandler = async (req: Request, res: Response):Promise<any> => {
     const { id } = req.params;
     try {
+        await prisma.comment.deleteMany({
+            where:{
+                blogId: parseInt(id)
+            }
+        })
         const blog = await prisma.blog.findUnique({
             where: {
                 id: parseInt(id),
