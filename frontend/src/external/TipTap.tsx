@@ -17,7 +17,7 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                 <button
                     onClick={() => editor.chain().focus().toggleBold().run()}
                     disabled={!editor.can().chain().focus().toggleBold().run()}
-                    className={editor.isActive("bold") ? "is-active" : ""}
+                    className={editor.isActive("bold") ? "is-active button-tiptap" : "button-tiptap "}
                 >
                     Bold
                 </button>
@@ -26,7 +26,7 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                     disabled={
                         !editor.can().chain().focus().toggleItalic().run()
                     }
-                    className={editor.isActive("italic") ? "is-active" : ""}
+                    className={editor.isActive("italic") ? "is-active button-tiptap" : "button-tiptap"}
                 >
                     Italic
                 </button>
@@ -35,30 +35,32 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                     disabled={
                         !editor.can().chain().focus().toggleStrike().run()
                     }
-                    className={editor.isActive("strike") ? "is-active" : ""}
+                    className={editor.isActive("strike") ? "is-active button-tiptap" : "button-tiptap"}
                 >
                     Strike
                 </button>
                 <button
                     onClick={() => editor.chain().focus().toggleCode().run()}
                     disabled={!editor.can().chain().focus().toggleCode().run()}
-                    className={editor.isActive("code") ? "is-active" : ""}
+                    className={editor.isActive("code") ? "is-active button-tiptap" : "button-tiptap"}
                 >
                     Code
                 </button>
                 <button
                     onClick={() => editor.chain().focus().unsetAllMarks().run()}
+                    className="button-tiptap"
                 >
                     Clear marks
                 </button>
                 <button
                     onClick={() => editor.chain().focus().clearNodes().run()}
+                    className="button-tiptap"
                 >
                     Clear nodes
                 </button>
                 <button
                     onClick={() => editor.chain().focus().setParagraph().run()}
-                    className={editor.isActive("paragraph") ? "is-active" : ""}
+                    className={editor.isActive("paragraph") ? "is-active button-tiptap" : "button-tiptap"}
                 >
                     Paragraph
                 </button>
@@ -68,8 +70,8 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                     }
                     className={
                         editor.isActive("heading", { level: 1 })
-                            ? "is-active"
-                            : ""
+                            ? "is-active button-tiptap"
+                            : "button-tiptap"
                     }
                 >
                     H1
@@ -80,8 +82,8 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                     }
                     className={
                         editor.isActive("heading", { level: 2 })
-                            ? "is-active"
-                            : ""
+                            ? "is-active button-tiptap"
+                            : "button-tiptap"
                     }
                 >
                     H2
@@ -92,8 +94,8 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                     }
                     className={
                         editor.isActive("heading", { level: 3 })
-                            ? "is-active"
-                            : ""
+                            ? "is-active button-tiptap"
+                            : "button-tiptap"
                     }
                 >
                     H3
@@ -104,8 +106,8 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                     }
                     className={
                         editor.isActive("heading", { level: 4 })
-                            ? "is-active"
-                            : ""
+                            ? "is-active button-tiptap"
+                            : "button-tiptap"
                     }
                 >
                     H4
@@ -116,8 +118,8 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                     }
                     className={
                         editor.isActive("heading", { level: 5 })
-                            ? "is-active"
-                            : ""
+                            ? "is-active button-tiptap"
+                            : "button-tiptap"
                     }
                 >
                     H5
@@ -128,8 +130,8 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                     }
                     className={
                         editor.isActive("heading", { level: 6 })
-                            ? "is-active"
-                            : ""
+                            ? "is-active button-tiptap"
+                            : "button-tiptap"
                     }
                 >
                     H6
@@ -138,7 +140,7 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                     onClick={() =>
                         editor.chain().focus().toggleBulletList().run()
                     }
-                    className={editor.isActive("bulletList") ? "is-active" : ""}
+                    className={editor.isActive("bulletList") ? "is-active button-tiptap" : "button-tiptap"}
                 >
                     Bullet list
                 </button>
@@ -147,7 +149,7 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                         editor.chain().focus().toggleOrderedList().run()
                     }
                     className={
-                        editor.isActive("orderedList") ? "is-active" : ""
+                        editor.isActive("orderedList") ? "is-active button-tiptap" : "button-tiptap"
                     }
                 >
                     Ordered list
@@ -156,7 +158,7 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                     onClick={() =>
                         editor.chain().focus().toggleCodeBlock().run()
                     }
-                    className={editor.isActive("codeBlock") ? "is-active" : ""}
+                    className={editor.isActive("codeBlock") ? "is-active button-tiptap" : "button-tiptap"}
                 >
                     Code block
                 </button>
@@ -164,7 +166,7 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                     onClick={() =>
                         editor.chain().focus().toggleBlockquote().run()
                     }
-                    className={editor.isActive("blockquote") ? "is-active" : ""}
+                    className={editor.isActive("blockquote") ? "is-active button-tiptap" : "button-tiptap"}
                 >
                     Blockquote
                 </button>
@@ -172,23 +174,27 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                     onClick={() =>
                         editor.chain().focus().setHorizontalRule().run()
                     }
+                    className="button-tiptap"
                 >
                     Horizontal rule
                 </button>
                 <button
                     onClick={() => editor.chain().focus().setHardBreak().run()}
+                    className="button-tiptap"
                 >
                     Hard break
                 </button>
                 <button
                     onClick={() => editor.chain().focus().undo().run()}
                     disabled={!editor.can().chain().focus().undo().run()}
+                    className="button-tiptap"
                 >
                     Undo
                 </button>
                 <button
                     onClick={() => editor.chain().focus().redo().run()}
                     disabled={!editor.can().chain().focus().redo().run()}
+                    className="button-tiptap"
                 >
                     Redo
                 </button>
@@ -198,8 +204,8 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                     }
                     className={
                         editor.isActive("textStyle", { color: "#958DF1" })
-                            ? "is-active"
-                            : ""
+                            ? "is-active button-tiptap"
+                            : "button-tiptap"
                     }
                 >
                     Purple
@@ -240,38 +246,20 @@ const content = `
 </blockquote>
 `;
 
-const TipTap = ({editor}:{editor: Editor | null}) => {
-    
+const TipTap = ({editor,readOnly}:{editor: Editor | null,readOnly:boolean}) => {
+
     if(!editor) {
         return null;
     }
-    const handleSubmit = () => {
-        const html = editor.getHTML();
-        console.log(html);
-        // You can send the HTML to your backend or do whatever you want with it
-        // For example, you can use fetch to send a POST request to your server
-        // fetch('/api/save', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({ content: html }),
-        // })
-        // .then(response => response.json())
-        // .then(data => console.log(data))
-        // .catch(error => console.error('Error:', error));
-    }
+
     return (
-        <div className="w-[90%] md:w-[60%] mx-auto">
-            <MenuBar editor={editor} />
+        <div className="">
+            {!readOnly && <MenuBar editor={editor} />}
             <EditorContent
                 editor={editor}
                 content={content}
 
             />
-            <div className="flex justify-start mt-4">
-          <button className="bg-slate-300 px-4 py-2 rounded-md" onClick={handleSubmit}>Submit</button>
-        </div>
         </div>
     );
 };

@@ -12,6 +12,7 @@ import TextStyle from "@tiptap/extension-text-style";
 import StarterKit from "@tiptap/starter-kit";
 import ListItem from "@tiptap/extension-list-item";
 import Color from "@tiptap/extension-color";
+import TipTap from "../external/TipTap";
 
 const extensions = [
     Color.configure({ types: [TextStyle.name, ListItem.name] }),
@@ -28,22 +29,35 @@ const extensions = [
     }),
 ];
 const Blog = () => {
-    const editor = useEditor({
-        extensions,
-        content:"",
-        editorProps: {
-            attributes: {
-                class: "bg-white p-4 mt-4 rounded-md shadow-md prose prose-slate max-w-none border-2 border-slate-200",
-            },
-        },
-    });
+
     const navigate= useNavigate();
     const [blog, setBlog] = useState<BlogResponse | null>(null);
     const [comment, setComment] = useState("");
     const [isLoading, setIsLoading] = useState(true);
     const { id } = useParams();
     const token = localStorage.getItem("token");
-    console.log("token",token);
+    const editor = useEditor({
+        extensions,
+        content: blog?.content || "",
+        editorProps: {
+            attributes: {
+                class: "bg-white p-4 mt-4 rounded-md shadow-md prose prose-slate max-w-none border-2 border-slate-200",
+            },
+        },
+        editable: false,
+    });
+
+    useEffect(() => {
+        if (blog && editor) {
+            editor.commands.setContent(blog.content);
+        }
+    }, [blog, editor]);
+
+    if(!editor){
+        return <div>
+            <HashLoader color="rgb(59 130 246)" className="mx-auto mt-10" />
+        </div>
+    }
     useEffect(() => {
         console.log(id);
     }, [id]);
@@ -118,9 +132,7 @@ const Blog = () => {
                             {blog && blog.user.name}
                         </p>
                     </div>
-                    <p className="text-sm text-slate-700 text-justify">
-                        {blog && blog.content}
-                    </p>
+                    <TipTap editor={editor} readOnly={true} />
                 </div>
                 {token && <div className="flex flex-col mt-4">
                     <p>Comment</p>

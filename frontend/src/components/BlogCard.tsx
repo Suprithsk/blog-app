@@ -26,7 +26,6 @@ const BlogCard = ({ blog, isProfile, deleteBlog }: BlogCardProps) => {
           {isProfile && <button className="text-sm text-white py-2 px-3 bg-red-500 rounded-md" onClick={(e) => {e.stopPropagation(); if(deleteBlog) deleteBlog(blog.id)}}>Delete</button>}
         </div>
         <h1 className="font-bold text-2xl mt-2">{blog.title}</h1>
-        <p className="text-sm mt-1">{blog.content.length>50?blog.content.substring(0,50)+"...":blog.content}</p>
         <p className="text-base mt-1">{blog.user.name}</p>
     </div>
   )

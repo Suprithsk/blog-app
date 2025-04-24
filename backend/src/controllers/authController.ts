@@ -32,7 +32,7 @@ export const signup: express.RequestHandler =async (req:Request, res:Response): 
         })
         res.status(200).json(user)
     } catch (error) {
-        console.error(error)
+        console.log(error)
         res.status(400).json({error: 'An error occurred'})
     }
 }
@@ -57,6 +57,7 @@ export const login: express.RequestHandler =async (req:Request, res:Response): P
         const token = jwt.sign({userId: user.id}, process.env.JWT_SECRET as string)
         res.json({token})
     } catch (error) {
+        console.log(error)
         res.status(400).json({error: 'An error occurred'})
     }
 }
