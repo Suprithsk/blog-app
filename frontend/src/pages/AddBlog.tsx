@@ -52,13 +52,6 @@ const AddBlog = () => {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
             />
-            <textarea
-                className="w-full border-2 border-gray-200 py-1 px-2 rounded-md"
-                rows={10}
-                placeholder="Content"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-            ></textarea>
             <select
                 name=""
                 id=""
@@ -73,6 +66,14 @@ const AddBlog = () => {
                     </option>
                 ))}
             </select>
+            <textarea
+                className="w-full border-2 border-gray-200 py-1 px-2 rounded-md"
+                rows={10}
+                placeholder="Content"
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+            ></textarea>
+            
             <div className="flex">
                 <button className="bg-blue-500 px-4 py-2 rounded-md mt-2 text-white" onClick={addBlogHandler}>
                     Submit

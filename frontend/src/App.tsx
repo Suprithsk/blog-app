@@ -7,6 +7,7 @@ import ActualHome from "./pages/ActualHome";
 import Blog from "./pages/Blog";
 import AddBlog from "./pages/AddBlog";
 import Profile from "./pages/Profile";
+import TipTapEditor from "./external/TipTap";
 function App() {
     return (
         <section className="relative font-poppins bg-amber-50 min-h-screen w-full">
@@ -19,8 +20,11 @@ function App() {
                     <Route path="/blog/:id" element={<Blog />} />
                     <Route path="/addblog" element={<AddBlog />} />
                     <Route path="/profile" element={<Profile />} />
+                    <Route path="/tiptap" element={<TipTapEditor />} />
                 </Routes>
+                
             </BrowserRouter>
+            
         </section>
     );
 }

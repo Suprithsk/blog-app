@@ -3,7 +3,13 @@ import { useNavigate } from "react-router-dom"
 const Hero = () => {
   const navigate = useNavigate()
   const clickHandler = () => {
-    navigate('/signup')
+    const token = localStorage.getItem('token')
+    if (token) {
+      navigate('/home')
+    } else {
+      navigate('/signin')
+    }
+    
   }
   return (
     <section className='relative flex justify-between items-center py-16 pl-8 bg-amber-50 h-[85vh] md:pl-20'>
