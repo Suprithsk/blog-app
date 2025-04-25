@@ -17,7 +17,7 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                 <button
                     onClick={() => editor.chain().focus().toggleBold().run()}
                     disabled={!editor.can().chain().focus().toggleBold().run()}
-                    className={editor.isActive("bold") ? "is-active button-tiptap" : "button-tiptap "}
+                    className={editor.isActive("bold") ? "is-active " : "button-tiptap "}
                 >
                     Bold
                 </button>
@@ -26,7 +26,7 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                     disabled={
                         !editor.can().chain().focus().toggleItalic().run()
                     }
-                    className={editor.isActive("italic") ? "is-active button-tiptap" : "button-tiptap"}
+                    className={editor.isActive("italic") ? "is-active" : "button-tiptap"}
                 >
                     Italic
                 </button>
@@ -35,14 +35,14 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                     disabled={
                         !editor.can().chain().focus().toggleStrike().run()
                     }
-                    className={editor.isActive("strike") ? "is-active button-tiptap" : "button-tiptap"}
+                    className={editor.isActive("strike") ? "is-active   " : "button-tiptap"}
                 >
                     Strike
                 </button>
                 <button
                     onClick={() => editor.chain().focus().toggleCode().run()}
                     disabled={!editor.can().chain().focus().toggleCode().run()}
-                    className={editor.isActive("code") ? "is-active button-tiptap" : "button-tiptap"}
+                    className={editor.isActive("code") ? "is-active" : "button-tiptap"}
                 >
                     Code
                 </button>
@@ -60,7 +60,7 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                 </button>
                 <button
                     onClick={() => editor.chain().focus().setParagraph().run()}
-                    className={editor.isActive("paragraph") ? "is-active button-tiptap" : "button-tiptap"}
+                    className={editor.isActive("paragraph") ? "is-active" : "button-tiptap"}
                 >
                     Paragraph
                 </button>
@@ -70,7 +70,7 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                     }
                     className={
                         editor.isActive("heading", { level: 1 })
-                            ? "is-active button-tiptap"
+                            ? "is-active"
                             : "button-tiptap"
                     }
                 >
@@ -82,7 +82,7 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                     }
                     className={
                         editor.isActive("heading", { level: 2 })
-                            ? "is-active button-tiptap"
+                            ? "is-active"
                             : "button-tiptap"
                     }
                 >
@@ -94,7 +94,7 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                     }
                     className={
                         editor.isActive("heading", { level: 3 })
-                            ? "is-active button-tiptap"
+                            ? "is-active"
                             : "button-tiptap"
                     }
                 >
@@ -106,7 +106,7 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                     }
                     className={
                         editor.isActive("heading", { level: 4 })
-                            ? "is-active button-tiptap"
+                            ? "is-active"
                             : "button-tiptap"
                     }
                 >
@@ -118,7 +118,7 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                     }
                     className={
                         editor.isActive("heading", { level: 5 })
-                            ? "is-active button-tiptap"
+                            ? "is-active"
                             : "button-tiptap"
                     }
                 >
@@ -130,7 +130,7 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                     }
                     className={
                         editor.isActive("heading", { level: 6 })
-                            ? "is-active button-tiptap"
+                            ? "is-active"
                             : "button-tiptap"
                     }
                 >
@@ -149,7 +149,7 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                         editor.chain().focus().toggleOrderedList().run()
                     }
                     className={
-                        editor.isActive("orderedList") ? "is-active button-tiptap" : "button-tiptap"
+                        editor.isActive("orderedList") ? "is-active" : "button-tiptap"
                     }
                 >
                     Ordered list
@@ -158,7 +158,7 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                     onClick={() =>
                         editor.chain().focus().toggleCodeBlock().run()
                     }
-                    className={editor.isActive("codeBlock") ? "is-active button-tiptap" : "button-tiptap"}
+                    className={editor.isActive("codeBlock") ? "is-active" : "button-tiptap"}
                 >
                     Code block
                 </button>
@@ -166,7 +166,7 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                     onClick={() =>
                         editor.chain().focus().toggleBlockquote().run()
                     }
-                    className={editor.isActive("blockquote") ? "is-active button-tiptap" : "button-tiptap"}
+                    className={editor.isActive("blockquote") ? "is-active" : "button-tiptap"}
                 >
                     Blockquote
                 </button>
@@ -204,7 +204,7 @@ const MenuBar = ({editor}: { editor: Editor | null }) => {
                     }
                     className={
                         editor.isActive("textStyle", { color: "#958DF1" })
-                            ? "is-active button-tiptap"
+                            ? "is-active"
                             : "button-tiptap"
                     }
                 >

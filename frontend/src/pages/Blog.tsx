@@ -53,14 +53,18 @@ const Blog = () => {
         }
     }, [blog, editor]);
 
+    useEffect(() => {
+        console.log(id);
+    }, [id]);
+    useEffect(() => {
+        fetchBlog();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     if(!editor){
         return <div>
             <HashLoader color="rgb(59 130 246)" className="mx-auto mt-10" />
         </div>
     }
-    useEffect(() => {
-        console.log(id);
-    }, [id]);
     const fetchBlog = async () => {
         try {
             setIsLoading(true);
@@ -98,10 +102,7 @@ const Blog = () => {
             console.error("Error adding comment:", error);
         }
     };
-    useEffect(() => {
-        fetchBlog();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    
     return (
         <div className="bg-amber-50">
             <ActualHeader />
